@@ -27,7 +27,7 @@ function playRound(playerSelection, computerChoice){
         else if(computerChoice == "ROCK"){
             return "Computer Won";
         }
-        else if(computerChoice == "SCISSPRS"){
+        else if(computerChoice == "SCISSORS"){
             return "Its a Draw!!!";
         }
     }
