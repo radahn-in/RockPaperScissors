@@ -1,56 +1,92 @@
 
-function getComputerChoice(){
-    const choices = ['ROCK', 'PAPER', 'SCISSORS'];
-    const randomHand = Math.floor(Math.random() * 3);
-    return choices[randomHand];
+
+
+let playerScore = 0;
+let computerScore = 0;
+const choices = document.querySelectorAll('#rpc');
+const results = document.querySelector('.results');
+const restart = document.querySelector('#restart');
+const score = document.querySelector('.score');
+gameStart();
+scoreUpdate();
+
+function computerPlay(){
+    let choice = Math.floor(Math.random() * (3) + 1);
+    if (choice ===1){
+        return "rock";
+    } else if (choice ===2){
+        return "paper";
+    } else {
+        return "scissors";
+    }
+
 }
 
-const playerSelection = prompt("Write a Rock, Paper, or Scissors").toUpperCase();
-const computerChoice = getComputerChoice();
-
-function playRound(playerSelection, computerChoice){
-    if(playerSelection == "ROCK"){
-        if(computerChoice == "PAPER"){
-            return "Computer Won";
-        }
-        else if(computerChoice == "ROCK"){
-            return "Its a Draw!!!";
-        }
-        else if(computerChoice == "SCISSORS"){
-            return "Player Won";
-        }
+function rpc(playerSelection, computerSelection) {
+    playerSelection = playerSelection.toLowerCase();
+    if(playerSelection === "rock" && computerSelection === "paper") {
+        results.textContent = `You lost! ${computerSelection} beats ${playerSelection}`; 
+        ++computerScore;
+        scoreUpdate();
+    } else if(playerSelection === "paper" && computerSelection === "scissors"){
+        results.textContent = `You lost! ${computerSelection} beats ${playerSelection}`; 
+        ++computerScore;
+        scoreUpdate();
+    } else if(playerSelection === "scissors" && computerSelection === "rock"){
+        results.textContent = `You lost! ${computerSelection} beats ${playerSelection}`; 
+        ++computerScore;
+        scoreUpdate();
+    } else if (playerSelection === computerSelection) {
+        results.textContent = `It's a draw! ${computerSelection} can't beat ${playerSelection}!`;
+    } else {
+        results.textContent = `You won! ${playerSelection} beats ${computerSelection}`;
+        ++playerScore;
+        scoreUpdate(); 
     }
-    else if(playerSelection == "SCISSORS"){
-        if(computerChoice == "PAPER"){
-            return "Player Won";
-        }
-        else if(computerChoice == "ROCK"){
-            return "Computer Won";
-        }
-        else if(computerChoice == "SCISSORS"){
-            return "Its a Draw!!!";
-        }
-    }
-    else if(playerSelection=="PAPER"){
-        if(computerChoice == "PAPER"){
-            return "Its a Draw!!!";
-        }
-        else if(computerChoice == "ROCK"){
-            return "Player Won";
-        }
-        else if(computerChoice == "SCISSPRS"){
-            return "Computer Won";
-        }
-    }
-    
+}
+function gameStart(){
+    playerScore = 0;
+    computerScore = 0;
+    choices.forEach(choice => {
+        choice.disabled = false;
+    });
+    restart.style.visibility = 'hidden';
+    restart.disabled = true;
+    restart.textContent = "";
+    score.textContent = `${playerScore} - ${computerScore}`; 
 }
 
 
-console.log("C: ",computerChoice);
-console.log("P: ",playerSelection);
+function gameEnd() {
+    choices.forEach(choice => {
+        choice.disabled = true;
+    });
+    restart.style.visibility = 'visible';
+    restart.disabled = false;
+    restart.textContent = "Restart";
+}
 
-result = playRound(playerSelection, computerChoice);
-console.log(result);
+function scoreUpdate() {
+    if(playerScore == 5) {
+        score.textContent = "You've won!";
+        gameEnd();
+    } else if( computerScore == 5) {
+        score.textContent = "You've won!";
+        gameEnd();
+    } else {
+        score.textContent = `${playerScore} - ${computerScore}` ;
+    }
+}
 
+function playRound(playerSelection) {
+    let computerSelection = computerPlay();
+    rpc(playerSelection, computerSelection)
+}
 
+choices.forEach(choice =>{
+    choice.addEventListener('click', () =>{
+        playRound(choice.textContent);
+    })
+});
 
+restart.addEventListener('click', gameStart);

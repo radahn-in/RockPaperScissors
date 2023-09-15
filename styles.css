@@ -1,0 +1,26 @@
+h1{
+    text-align: center;
+}
+
+#game-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#options{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0 24px;
+}
+
+#rpc{
+    padding: 2px 8px;
+    margin: 16px;
+}
+
+#restart{
+    padding: 2px 8px;
+    
+}
