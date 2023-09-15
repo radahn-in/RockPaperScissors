@@ -71,7 +71,7 @@ function scoreUpdate() {
         score.textContent = "You've won!";
         gameEnd();
     } else if( computerScore == 5) {
-        score.textContent = "You've won!";
+        score.textContent = "You've Lost!";
         gameEnd();
     } else {
         score.textContent = `${playerScore} - ${computerScore}` ;
